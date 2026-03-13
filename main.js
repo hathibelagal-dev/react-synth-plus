@@ -1,8 +1,58 @@
-let polySynth;
-let filter;
-let isStarted = false;
+// Wavetable Definitions (Harmonic Partials)
+const wavetables = {
+    basic: [
+        [1], // Sine
+        [1, 0, 0.11, 0, 0.04], // Triangle (approx)
+        [1, 0.5, 0.33, 0.25, 0.2, 0.16, 0.14, 0.12], // Saw
+        [1, 0, 0.33, 0, 0.2, 0, 0.14, 0, 0.11, 0, 0.09, 0] // Square
+    ],
+    harmonic: [
+        [1], // Pure Sine
+        [1, 1, 0, 0, 0, 0], // Octave
+        [1, 0.5, 1, 0, 0, 0], // Fifth
+        [1, 0.5, 0.33, 1, 0.25, 1] // Noisy
+    ]
+};
 
-const startButton = document.getElementById('start-audio');
+let currentWT = 'basic';
+let currentWTFrame = 0;
+
+// Interpolation Function
+function interpolatePartials(pos, table) {
+    const frameCount = table.length;
+    const scaledPos = pos * (frameCount - 1);
+    const frame1Idx = Math.floor(scaledPos);
+    const frame2Idx = Math.min(frame1Idx + 1, frameCount - 1);
+    const mix = scaledPos - frame1Idx;
+
+    const frame1 = table[frame1Idx];
+    const frame2 = table[frame2Idx];
+    
+    // Find max length to avoid index errors
+    const maxLength = Math.max(frame1.length, frame2.length);
+    const result = [];
+
+    for (let i = 0; i < maxLength; i++) {
+        const p1 = frame1[i] || 0;
+        const p2 = frame2[i] || 0;
+        result[i] = p1 + (p2 - p1) * mix;
+    }
+    return result;
+}
+
+function updateWavetable() {
+    if (!polySynth) return;
+    const pos = parseFloat(document.getElementById('wt-pos').value);
+    const partials = interpolatePartials(pos, wavetables[currentWT]);
+    
+    // PolySynth.set applies to all active and future voices
+    polySynth.set({
+        oscillator: {
+            type: 'custom',
+            partials: partials
+        }
+    });
+}
 
 // Initialize Tone.js and Synth components
 async function initAudio() {
@@ -21,7 +71,8 @@ async function initAudio() {
     // Use PolySynth for multiple voices
     polySynth = new Tone.PolySynth(Tone.Synth, {
         oscillator: {
-            type: 'sine'
+            type: 'custom',
+            partials: [1]
         },
         envelope: {
             attack: 0.1,
@@ -34,6 +85,9 @@ async function initAudio() {
     isStarted = true;
     startButton.classList.add('active');
     startButton.innerText = 'Audio Engine Running';
+    
+    // Initial wavetable update
+    updateWavetable();
 }
 
 // UI Event Listeners
@@ -41,23 +95,15 @@ startButton.addEventListener('click', initAudio);
 
 // Keyboard UI handling
 const keys = document.querySelectorAll('.key');
-const keyMap = {}; // Maps keyboard keys (e.g., 'a') to DOM elements
+const keyMap = {};
 
 keys.forEach(key => {
     const k = key.getAttribute('data-key');
     if (k) keyMap[k] = key;
 
-    key.addEventListener('mousedown', () => {
-        playNote(key);
-    });
-
-    key.addEventListener('mouseup', () => {
-        stopNote(key);
-    });
-
-    key.addEventListener('mouseleave', () => {
-        stopNote(key);
-    });
+    key.addEventListener('mousedown', () => playNote(key));
+    key.addEventListener('mouseup', () => stopNote(key));
+    key.addEventListener('mouseleave', () => stopNote(key));
 });
 
 function playNote(keyElement) {
@@ -76,7 +122,6 @@ function stopNote(keyElement) {
 
 // Global Keyboard Listeners
 const pressedKeys = new Set();
-
 window.addEventListener('keydown', (e) => {
     const key = e.key.toLowerCase();
     if (keyMap[key] && !pressedKeys.has(key)) {
@@ -94,13 +139,12 @@ window.addEventListener('keyup', (e) => {
 });
 
 // Parameter Updates
-document.getElementById('osc-type').addEventListener('change', (e) => {
-    if (polySynth) {
-        polySynth.set({
-            oscillator: { type: e.target.value }
-        });
-    }
+document.getElementById('wavetable-select').addEventListener('change', (e) => {
+    currentWT = e.target.value;
+    updateWavetable();
 });
+
+document.getElementById('wt-pos').addEventListener('input', updateWavetable);
 
 document.getElementById('filter-cutoff').addEventListener('input', (e) => {
     if (filter) filter.frequency.value = parseFloat(e.target.value);

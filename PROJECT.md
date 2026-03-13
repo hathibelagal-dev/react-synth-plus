@@ -15,13 +15,13 @@ The goal is to create a fully functional, polyphonic wavetable synthesizer that 
 ## 3. Feature Set
 
 ### Phase 1: Audio Foundation
-- [x] **Dual Wavetable Oscillators**: Basic oscillator implementation (v0.1)
+- [x] **Dual Wavetable Oscillators**: Basic oscillator implementation with custom partials (v0.4)
 - [ ] **Sub-Oscillator**: Standard shapes (Sine, Square, Saw) for low-end reinforcement.
 - [ ] **Noise Generator**: White/Pink/Brownian noise with filtering.
 - [x] **Polyphonic Management**: PolySynth implementation with keyboard UI (v0.2)
 
 ### Phase 2: Wavetable Engine
-- [ ] **Wavetable Morphing**: Ability to interpolate between different partial sets.
+- [x] **Wavetable Morphing**: Interpolation between partial sets via WT POS slider (v0.4)
 - [ ] **Warp Modes**: Implementation of basic "warp" effects like FM and Sync.
 - [ ] **Visualizer**: 2D/3D representation of the current wavetable frame.
 

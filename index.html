@@ -16,14 +16,13 @@
             
             <div class="module">
                 <h3>Oscillator 1</h3>
-                <label>Waveform: 
-                    <select id="osc-type">
-                        <option value="sine">Sine</option>
-                        <option value="square">Square</option>
-                        <option value="sawtooth">Sawtooth</option>
-                        <option value="triangle">Triangle</option>
+                <label>Wavetable: 
+                    <select id="wavetable-select">
+                        <option value="basic">Basic Shapes</option>
+                        <option value="harmonic">Harmonic Series</option>
                     </select>
                 </label>
+                <label>WT POS: <input type="range" id="wt-pos" min="0" max="1" step="0.01" value="0"></label>
             </div>
 
             <div class="module">
