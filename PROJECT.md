@@ -40,7 +40,7 @@ The goal is to create a fully functional, polyphonic wavetable synthesizer that 
 
 ### Phase 5: UI/UX & Interactivity
 - [ ] **Interactive Knobs/Sliders**: Custom SVG or Canvas-based controls.
-- [ ] **Keyboard Support**: On-screen piano roll and QWERTY mapping.
+- [x] **Keyboard Support**: On-screen piano roll and QWERTY mapping (v0.3)
 - [ ] **MIDI Support**: Web MIDI API for external controller integration.
 - [ ] **Preset System**: JSON-based preset loading and saving.
 

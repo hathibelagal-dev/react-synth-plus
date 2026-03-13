@@ -41,28 +41,56 @@ startButton.addEventListener('click', initAudio);
 
 // Keyboard UI handling
 const keys = document.querySelectorAll('.key');
+const keyMap = {}; // Maps keyboard keys (e.g., 'a') to DOM elements
+
 keys.forEach(key => {
+    const k = key.getAttribute('data-key');
+    if (k) keyMap[k] = key;
+
     key.addEventListener('mousedown', () => {
-        if (!isStarted) return;
-        const note = key.getAttribute('data-note');
-        polySynth.triggerAttack(note);
-        key.classList.add('active');
+        playNote(key);
     });
 
     key.addEventListener('mouseup', () => {
-        if (!isStarted) return;
-        const note = key.getAttribute('data-note');
-        polySynth.triggerRelease(note);
-        key.classList.remove('active');
+        stopNote(key);
     });
 
     key.addEventListener('mouseleave', () => {
-        if (isStarted) {
-            const note = key.getAttribute('data-note');
-            polySynth.triggerRelease(note);
-            key.classList.remove('active');
-        }
+        stopNote(key);
     });
+});
+
+function playNote(keyElement) {
+    if (!isStarted || keyElement.classList.contains('active')) return;
+    const note = keyElement.getAttribute('data-note');
+    polySynth.triggerAttack(note);
+    keyElement.classList.add('active');
+}
+
+function stopNote(keyElement) {
+    if (!isStarted || !keyElement.classList.contains('active')) return;
+    const note = keyElement.getAttribute('data-note');
+    polySynth.triggerRelease(note);
+    keyElement.classList.remove('active');
+}
+
+// Global Keyboard Listeners
+const pressedKeys = new Set();
+
+window.addEventListener('keydown', (e) => {
+    const key = e.key.toLowerCase();
+    if (keyMap[key] && !pressedKeys.has(key)) {
+        pressedKeys.add(key);
+        playNote(keyMap[key]);
+    }
+});
+
+window.addEventListener('keyup', (e) => {
+    const key = e.key.toLowerCase();
+    if (keyMap[key]) {
+        pressedKeys.delete(key);
+        stopNote(keyMap[key]);
+    }
 });
 
 // Parameter Updates

@@ -102,22 +102,32 @@ button#start-audio.active {
     cursor: pointer;
     border: 1px solid #000;
     transition: background 0.1s;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    font-size: 10px;
+    font-weight: bold;
+    user-select: none;
 }
 
 .key.white {
-    width: 30px;
+    width: 35px;
     height: 100%;
     background: #fff;
     z-index: 1;
+    color: #333;
 }
 
 .key.black {
-    width: 20px;
+    width: 25px;
     height: 60%;
     background: #333;
-    margin-left: -10px;
-    margin-right: -10px;
+    margin-left: -12.5px;
+    margin-right: -12.5px;
     z-index: 2;
+    color: #eee;
 }
 
 .key.white.active {
