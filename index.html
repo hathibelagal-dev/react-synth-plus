@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WaveSerumJS - Prototype v0.1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <h1>WaveSerumJS Prototype</h1>
+        
+        <div class="controls">
+            <button id="start-audio">Start Audio Engine</button>
+            <hr>
+            
+            <div class="module">
+                <h3>Oscillator 1</h3>
+                <label>Waveform: 
+                    <select id="osc-type">
+                        <option value="sine">Sine</option>
+                        <option value="square">Square</option>
+                        <option value="sawtooth">Sawtooth</option>
+                        <option value="triangle">Triangle</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="module">
+                <h3>Filter</h3>
+                <label>Cutoff: <input type="range" id="filter-cutoff" min="20" max="10000" value="2000"></label>
+            </div>
+
+            <div class="module">
+                <h3>Envelope (ADSR)</h3>
+                <label>Attack: <input type="range" id="env-attack" min="0" max="2" step="0.01" value="0.1"></label>
+                <label>Release: <input type="range" id="env-release" min="0" max="5" step="0.01" value="1"></label>
+            </div>
+
+            <div class="play-zone">
+                <button id="play-note">Trigger Note (C4)</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
