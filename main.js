@@ -1,9 +1,8 @@
-let synth;
+let polySynth;
 let filter;
 let isStarted = false;
 
 const startButton = document.getElementById('start-audio');
-const playButton = document.getElementById('play-note');
 
 // Initialize Tone.js and Synth components
 async function initAudio() {
@@ -19,7 +18,8 @@ async function initAudio() {
         rolloff: -12
     }).toDestination();
 
-    synth = new Tone.Synth({
+    // Use PolySynth for multiple voices
+    polySynth = new Tone.PolySynth(Tone.Synth, {
         oscillator: {
             type: 'sine'
         },
@@ -39,19 +39,39 @@ async function initAudio() {
 // UI Event Listeners
 startButton.addEventListener('click', initAudio);
 
-playButton.addEventListener('mousedown', () => {
-    if (!isStarted) return;
-    synth.triggerAttack('C4');
-});
+// Keyboard UI handling
+const keys = document.querySelectorAll('.key');
+keys.forEach(key => {
+    key.addEventListener('mousedown', () => {
+        if (!isStarted) return;
+        const note = key.getAttribute('data-note');
+        polySynth.triggerAttack(note);
+        key.classList.add('active');
+    });
 
-playButton.addEventListener('mouseup', () => {
-    if (!isStarted) return;
-    synth.triggerRelease();
+    key.addEventListener('mouseup', () => {
+        if (!isStarted) return;
+        const note = key.getAttribute('data-note');
+        polySynth.triggerRelease(note);
+        key.classList.remove('active');
+    });
+
+    key.addEventListener('mouseleave', () => {
+        if (isStarted) {
+            const note = key.getAttribute('data-note');
+            polySynth.triggerRelease(note);
+            key.classList.remove('active');
+        }
+    });
 });
 
 // Parameter Updates
 document.getElementById('osc-type').addEventListener('change', (e) => {
-    if (synth) synth.oscillator.type = e.target.value;
+    if (polySynth) {
+        polySynth.set({
+            oscillator: { type: e.target.value }
+        });
+    }
 });
 
 document.getElementById('filter-cutoff').addEventListener('input', (e) => {
@@ -59,9 +79,17 @@ document.getElementById('filter-cutoff').addEventListener('input', (e) => {
 });
 
 document.getElementById('env-attack').addEventListener('input', (e) => {
-    if (synth) synth.envelope.attack = parseFloat(e.target.value);
+    if (polySynth) {
+        polySynth.set({
+            envelope: { attack: parseFloat(e.target.value) }
+        });
+    }
 });
 
 document.getElementById('env-release').addEventListener('input', (e) => {
-    if (synth) synth.envelope.release = parseFloat(e.target.value);
+    if (polySynth) {
+        polySynth.set({
+            envelope: { release: parseFloat(e.target.value) }
+        });
+    }
 });

@@ -18,7 +18,7 @@ The goal is to create a fully functional, polyphonic wavetable synthesizer that 
 - [x] **Dual Wavetable Oscillators**: Basic oscillator implementation (v0.1)
 - [ ] **Sub-Oscillator**: Standard shapes (Sine, Square, Saw) for low-end reinforcement.
 - [ ] **Noise Generator**: White/Pink/Brownian noise with filtering.
-- [x] **Polyphonic Management**: ADSR envelopes per voice (v0.1)
+- [x] **Polyphonic Management**: PolySynth implementation with keyboard UI (v0.2)
 
 ### Phase 2: Wavetable Engine
 - [ ] **Wavetable Morphing**: Ability to interpolate between different partial sets.
