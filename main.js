@@ -19,8 +19,47 @@ let currentWTFrame = 0;
 
 let polySynth;
 let filter;
+let waveform;
 let isStarted = false;
 const startButton = document.getElementById('start-audio');
+
+// Visualizer Setup
+const canvas = document.getElementById('oscilloscope');
+const ctx = canvas.getContext('2d');
+
+function draw() {
+    requestAnimationFrame(draw);
+    if (!waveform) return;
+
+    const values = waveform.getValue();
+    const width = canvas.width;
+    const height = canvas.height;
+
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, width, height);
+    
+    ctx.beginPath();
+    ctx.lineCap = 'round';
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#00d2ff';
+
+    for (let i = 0; i < values.length; i++) {
+        const x = (i / values.length) * width;
+        const y = ((values[i] + 1) / 2) * height;
+
+        if (i === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+    }
+    ctx.stroke();
+}
+
+// Initial canvas sizing
+canvas.width = canvas.offsetWidth;
+canvas.height = canvas.offsetHeight;
+draw();
 
 // Interpolation Function
 function interpolatePartials(pos, table) {
@@ -72,6 +111,9 @@ async function initAudio() {
         type: 'lowpass',
         rolloff: -12
     }).toDestination();
+
+    waveform = new Tone.Waveform(1024);
+    Tone.Destination.connect(waveform);
 
     // Use PolySynth for multiple voices
     polySynth = new Tone.PolySynth(Tone.Synth, {

@@ -23,7 +23,7 @@ The goal is to create a fully functional, polyphonic wavetable synthesizer that 
 ### Phase 2: Wavetable Engine
 - [x] **Wavetable Morphing**: Interpolation between partial sets via WT POS slider (v0.4)
 - [ ] **Warp Modes**: Implementation of basic "warp" effects like FM and Sync.
-- [ ] **Visualizer**: 2D/3D representation of the current wavetable frame.
+- [x] **Visualizer**: Real-time oscilloscope for waveform display (v0.5)
 
 ### Phase 3: Modulation & Routing
 - [x] **Envelopes (ADSR)**: Dedicated envelopes for Amplitude (v0.1)
