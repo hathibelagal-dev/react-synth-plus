@@ -35,7 +35,7 @@
                 <label>Waveform
                     <select id="sub-type">
                         <option value="sine">Sine</option>
-                        <option value="square">Square</option>
+                        <option value="square" selected>Square</option>
                         <option value="sawtooth">Sawtooth</option>
                         <option value="triangle">Triangle</option>
                     </select>
@@ -47,6 +47,18 @@
                         <option value="-2" selected>-2 Oct</option>
                     </select>
                 </label>
+            </div>
+
+            <div class="module noise">
+                <h3>Noise Gen</h3>
+                <label>Type
+                    <select id="noise-type">
+                        <option value="white">White</option>
+                        <option value="pink">Pink</option>
+                        <option value="brown">Brown</option>
+                    </select>
+                </label>
+                <label>Volume <input type="range" id="noise-volume" min="0" max="1" step="0.01" value="0"></label>
             </div>
 
             <div class="module filter">

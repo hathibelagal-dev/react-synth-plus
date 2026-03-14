@@ -19,6 +19,8 @@ let currentWTFrame = 0;
 
 let polySynth;
 let subSynth;
+let noise;
+let noiseEnv;
 let filter;
 let distortion;
 let reverb;
@@ -161,7 +163,18 @@ async function initAudio() {
             release: 1
         }
     }).connect(reverb);
-    subSynth.volume.value = -6; // Default volume
+    subSynth.volume.value = -6;
+
+    // Noise Generator
+    noise = new Tone.Noise('white').start();
+    noiseEnv = new Tone.AmplitudeEnvelope({
+        attack: 0.1,
+        decay: 0.2,
+        sustain: 0.5,
+        release: 1
+    }).connect(reverb);
+    noise.connect(noiseEnv);
+    noiseEnv.volume.value = -Infinity; // Start silent
 
     isStarted = true;
     startButton.classList.add('active');
@@ -187,17 +200,26 @@ keys.forEach(key => {
     key.addEventListener('mouseleave', () => stopNote(key));
 });
 
+let activeNoteCount = 0;
+
 function playNote(keyElement) {
     if (!isStarted || keyElement.classList.contains('active')) return;
     const note = keyElement.getAttribute('data-note');
     
+    activeNoteCount++;
+    
     // Main Synth
     polySynth.triggerAttack(note);
 
-    // Sub Synth (e.g. C4 -> C2)
+    // Sub Synth
     const subOctaveOffset = parseInt(document.getElementById('sub-octave').value);
     const subNote = Tone.Frequency(note).transpose(subOctaveOffset * 12).toNote();
     subSynth.triggerAttack(subNote);
+
+    // Noise
+    if (activeNoteCount === 1) {
+        noiseEnv.triggerAttack();
+    }
 
     keyElement.classList.add('active');
 }
@@ -206,11 +228,18 @@ function stopNote(keyElement) {
     if (!isStarted || !keyElement.classList.contains('active')) return;
     const note = keyElement.getAttribute('data-note');
     
+    activeNoteCount = Math.max(0, activeNoteCount - 1);
+
     polySynth.triggerRelease(note);
 
     const subOctaveOffset = parseInt(document.getElementById('sub-octave').value);
     const subNote = Tone.Frequency(note).transpose(subOctaveOffset * 12).toNote();
     subSynth.triggerRelease(subNote);
+
+    // Noise (only release if no more notes are held)
+    if (activeNoteCount === 0) {
+        noiseEnv.triggerRelease();
+    }
 
     keyElement.classList.remove('active');
 }
@@ -266,12 +295,26 @@ document.getElementById('env-attack').addEventListener('input', (e) => {
     const val = parseFloat(e.target.value);
     if (polySynth) polySynth.set({ envelope: { attack: val } });
     if (subSynth) subSynth.set({ envelope: { attack: val } });
+    if (noiseEnv) noiseEnv.attack = val;
 });
 
 document.getElementById('env-release').addEventListener('input', (e) => {
     const val = parseFloat(e.target.value);
     if (polySynth) polySynth.set({ envelope: { release: val } });
     if (subSynth) subSynth.set({ envelope: { release: val } });
+    if (noiseEnv) noiseEnv.release = val;
+});
+
+// Noise UI Listeners
+document.getElementById('noise-type').addEventListener('change', (e) => {
+    if (noise) noise.type = e.target.value;
+});
+
+document.getElementById('noise-volume').addEventListener('input', (e) => {
+    if (noiseEnv) {
+        const vol = parseFloat(e.target.value);
+        noiseEnv.volume.value = vol === 0 ? -Infinity : Tone.gainToDb(vol);
+    }
 });
 
 document.getElementById('fx-dist').addEventListener('input', (e) => {

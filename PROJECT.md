@@ -17,7 +17,7 @@ The goal is to create a fully functional, polyphonic wavetable synthesizer that 
 ### Phase 1: Audio Foundation
 - [x] **Dual Wavetable Oscillators**: Basic oscillator implementation with custom partials (v0.4)
 - [x] **Sub-Oscillator**: Dedicated sub-osc with octave and waveform control (v0.9)
-- [ ] **Noise Generator**: White/Pink/Brownian noise with filtering.
+- [x] **Noise Generator**: White/Pink/Brownian noise with filtering (v0.10)
 - [x] **Polyphonic Management**: PolySynth implementation with keyboard UI (v0.2)
 
 ### Phase 2: Wavetable Engine
