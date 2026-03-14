@@ -1,4 +1,4 @@
-# Project Plan: WaveSerumJS
+# Project Plan: ReactSynthPlus
 
 A high-performance, web-based wavetable synthesizer inspired by Xfer Serum, built using Tone.js, HTML5 Canvas, and modern JavaScript.
 
