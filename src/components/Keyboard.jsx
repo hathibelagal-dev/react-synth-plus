@@ -1,81 +1,38 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { engine } from '../audio/Engine';
+import React from 'react';
+import { useKeyboard } from '../hooks/useKeyboard';
 
-const KEYS = [
-    { note: 'C4', key: 'a', type: 'white' },
-    { note: 'C#4', key: 'w', type: 'black' },
-    { note: 'D4', key: 's', type: 'white' },
-    { note: 'D#4', key: 'e', type: 'black' },
-    { note: 'E4', key: 'd', type: 'white' },
-    { note: 'F4', key: 'f', type: 'white' },
-    { note: 'F#4', key: 't', type: 'black' },
-    { note: 'G4', key: 'g', type: 'white' },
-    { note: 'G#4', key: 'y', type: 'black' },
-    { note: 'A4', key: 'h', type: 'white' },
-    { note: 'A#4', key: 'u', type: 'black' },
-    { note: 'B4', key: 'j', type: 'white' },
-    { note: 'C5', key: 'k', type: 'white' },
-];
-
+/**
+ * Keyboard component refactored to use the headless `useKeyboard` hook and Tailwind CSS.
+ */
 const Keyboard = ({ subOctave }) => {
-    const [pressedNotes, setPressedNotes] = useState(new Set());
-
-    const handlePlayNote = useCallback((note) => {
-        if (!engine.isStarted) return;
-        engine.playNote(note, subOctave);
-        setPressedNotes(prev => new Set(prev).add(note));
-    }, [subOctave]);
-
-    const handleStopNote = useCallback((note) => {
-        if (!engine.isStarted) return;
-        engine.stopNote(note, subOctave);
-        setPressedNotes(prev => {
-            const next = new Set(prev);
-            next.delete(note);
-            return next;
-        });
-    }, [subOctave]);
-
-    useEffect(() => {
-        const handleKeyDown = (e) => {
-            const key = e.key.toLowerCase();
-            const config = KEYS.find(k => k.key === key);
-            if (config && !pressedNotes.has(config.note)) {
-                handlePlayNote(config.note);
-            }
-        };
-
-        const handleKeyUp = (e) => {
-            const key = e.key.toLowerCase();
-            const config = KEYS.find(k => k.key === key);
-            if (config) {
-                handleStopNote(config.note);
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-        window.addEventListener('keyup', handleKeyUp);
-
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-            window.removeEventListener('keyup', handleKeyUp);
-        };
-    }, [pressedNotes, handlePlayNote, handleStopNote]);
+    const { pressedNotes, playNote, stopNote, keys } = useKeyboard(subOctave);
 
     return (
-        <section className="play-zone">
-            <div className="keyboard">
-                {KEYS.map(({ note, key, type }) => (
-                    <div
-                        key={note}
-                        className={`key ${type} ${pressedNotes.has(note) ? 'active' : ''}`}
-                        onMouseDown={() => handlePlayNote(note)}
-                        onMouseUp={() => handleStopNote(note)}
-                        onMouseLeave={() => handleStopNote(note)}
-                    >
-                        <span>{key.toUpperCase()}</span>
-                    </div>
-                ))}
+        <section className="mt-2">
+            <div className="flex justify-center bg-black p-3 rounded-md shadow-inner">
+                {keys.map(({ note, key, type }) => {
+                    const isActive = pressedNotes.has(note);
+                    const isWhite = type === 'white';
+                    
+                    return (
+                        <div
+                            key={note}
+                            className={`
+                                cursor-pointer border border-black flex items-end justify-center pb-2 box-border font-bold select-none transition-colors
+                                ${isWhite 
+                                    ? 'w-[50px] h-[160px] bg-gray-100 z-10 text-gray-800 rounded-b-md' 
+                                    : 'w-[32px] h-[100px] bg-zinc-800 -ml-4 -mr-4 z-20 text-gray-300 rounded-b-sm'}
+                                ${isActive && isWhite ? 'bg-synth-blue' : ''}
+                                ${isActive && !isWhite ? 'bg-cyan-700' : ''}
+                            `}
+                            onMouseDown={() => playNote(note)}
+                            onMouseUp={() => stopNote(note)}
+                            onMouseLeave={() => stopNote(note)}
+                        >
+                            <span className="text-[11px]">{key.toUpperCase()}</span>
+                        </div>
+                    );
+                })}
             </div>
         </section>
     );

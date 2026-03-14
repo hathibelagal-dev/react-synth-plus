@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-synth-dark text-gray-200 font-sans min-h-screen flex items-center justify-center m-0 p-5;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-synth-blue text-black font-bold py-2 px-4 rounded transition-colors hover:bg-cyan-500 cursor-pointer border-none;
+  }
+
+  .btn-active {
+    @apply bg-green-600 text-white font-bold py-2 px-4 rounded transition-colors border-none;
+  }
+
+  .btn-alert {
+    @apply bg-synth-red text-white font-bold py-2 px-4 rounded transition-colors hover:bg-red-600 cursor-pointer border-none;
+  }
+
+  .synth-module {
+    @apply bg-synth-module p-4 rounded-md border-t-2 border-synth-blue flex flex-col gap-3;
+  }
+
+  .synth-label {
+    @apply flex flex-col gap-1 text-[0.75rem] text-gray-400;
+  }
+
+  .synth-select {
+    @apply bg-zinc-800 text-white border border-zinc-700 p-1 rounded text-[0.8rem];
+  }
+
+  .synth-range {
+    @apply w-full cursor-pointer;
+  }
+}

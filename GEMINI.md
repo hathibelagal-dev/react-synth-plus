@@ -5,43 +5,29 @@ ReactSynth+ is a high-performance, web-based wavetable synthesizer inspired by X
 
 ### Core Technologies
 - **Audio Engine:** Tone.js (Web Audio API wrapper)
-- **UI Framework:** React (Current Target) / Vanilla JS (Legacy)
+- **UI Framework:** React (Headless Hooks Architecture)
+- **Styling:** Tailwind CSS
 - **Visualization:** HTML5 Canvas
-- **Styling:** Vanilla CSS
-- **Build Tool:** Vite (Proposed)
+- **Build Tool:** Vite
 
 ## Architecture
-The project follows a modular design where different synthesis components (Oscillators, Filters, LFOs, Envelopes, FX) are treated as independent modules.
+The project follows a **Headless Hook** design pattern. The audio logic is encapsulated in the `AudioEngine` singleton, while React hooks provide a reactive interface for components.
 
-### Audio Signal Path
-```text
-[Osc 1] --\
-[Osc 2] ----> [Mixer] ---> [Filter] ---> [FX Chain] ---> [Limiter] ---> [Output]
-[Sub]   --/
-[Noise] -/
-```
-
-### Key Modules
-- **Oscillator 1:** Dual wavetable oscillator with morphing/interpolation.
-- **Sub Oscillator:** Dedicated low-frequency oscillator for reinforcement.
-- **Noise Generator:** Supports White, Pink, and Brownian noise.
-- **Filter:** Multi-mode (Lowpass, Highpass, Bandpass) with LFO modulation.
-- **LFO:** Customizable shapes and routing (Targeting Cutoff/Pitch).
-- **FX Rack:** Includes Distortion, Reverb, and Delay.
+### Key Hooks
+- `useAudioEngine`: Manages engine initialization and parameter updates.
+- `useKeyboard`: Manages note triggering, key state, and QWERTY mapping.
 
 ## Development Guidelines
-- **Audio Lifecycle:** Always ensure `Tone.start()` is called via user interaction before starting the audio engine.
-- **Performance:** Maintain a high frame rate for the canvas visualizer and minimize audio thread lag by optimizing polyphonic voice allocation.
-- **State Management:** Use React state/context for UI parameters and sync them with the underlying Tone.js nodes.
+- **Logic vs. UI:** Keep audio logic in `AudioEngine.js` or specialized hooks.
+- **Styling:** Use Tailwind CSS utility classes for all UI components.
+- **Headless Pattern:** When adding new features (e.g., Modulation Matrix), first create a headless hook before implementing the UI component.
 
 ## Building and Running
-### Current (Legacy)
-- Open `index.html` directly in a browser or use a simple live server.
-
-### Future (React/Vite)
+### Current
 - `npm install`
 - `npm run dev`
 - `npm run build`
 
 ## Project Status
-The project is currently in **Phase 2/3** of its roadmap, with core synthesis and visualization working in vanilla JS. The next major step is refactoring the UI and state management into React.
+The project has successfully transitioned to a React + Tailwind architecture with headless hooks. Core synthesis and visualization are fully functional.
+

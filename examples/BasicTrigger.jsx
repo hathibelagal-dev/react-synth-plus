@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
-import { engine } from '../src/audio/Engine';
+import React from 'react';
+import { useAudioEngine } from '../src/hooks/useAudioEngine';
 
 /**
- * BasicTrigger - A minimal example of how to use the AudioEngine.
- * Demonstrates manual note triggering and parameter updates.
+ * BasicTrigger - Refactored to use headless hooks and Tailwind CSS.
+ * Demonstrates the simplest way to integrate the synth logic into a custom UI.
  */
 const BasicTrigger = () => {
-    const [isStarted, setIsStarted] = useState(false);
-
-    const handleStart = async () => {
-        await engine.init();
-        setIsStarted(true);
-    };
+    const { isStarted, init, engine } = useAudioEngine();
 
     const playNote = (note) => {
         if (!isStarted) return;
@@ -24,42 +19,34 @@ const BasicTrigger = () => {
     };
 
     return (
-        <div style={{ padding: '20px', background: '#1a1a1a', color: 'white', borderRadius: '8px' }}>
-            <h2>Basic Trigger Example</h2>
+        <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-lg text-white shadow-xl">
+            <h2 className="text-xl font-bold mb-4 text-synth-blue">Basic Trigger Example</h2>
+            
             {!isStarted ? (
-                <button onClick={handleStart} style={{ padding: '10px 20px', cursor: 'pointer' }}>
-                    Click to Init Audio
+                <button 
+                    onClick={init} 
+                    className="btn-alert w-full py-3"
+                >
+                    INITIALIZE AUDIO
                 </button>
             ) : (
-                <div style={{ display: 'flex', gap: '10px' }}>
-                    <button 
-                        onMouseDown={() => playNote('C4')} 
-                        onMouseUp={() => stopNote('C4')}
-                        onMouseLeave={() => stopNote('C4')}
-                        style={{ padding: '20px', cursor: 'pointer' }}
-                    >
-                        Play C4
-                    </button>
-                    <button 
-                        onMouseDown={() => playNote('E4')} 
-                        onMouseUp={() => stopNote('E4')}
-                        onMouseLeave={() => stopNote('E4')}
-                        style={{ padding: '20px', cursor: 'pointer' }}
-                    >
-                        Play E4
-                    </button>
-                    <button 
-                        onMouseDown={() => playNote('G4')} 
-                        onMouseUp={() => stopNote('G4')}
-                        onMouseLeave={() => stopNote('G4')}
-                        style={{ padding: '20px', cursor: 'pointer' }}
-                    >
-                        Play G4
-                    </button>
+                <div className="flex gap-4">
+                    {['C4', 'E4', 'G4'].map(note => (
+                        <button 
+                            key={note}
+                            onMouseDown={() => playNote(note)} 
+                            onMouseUp={() => stopNote(note)}
+                            onMouseLeave={() => stopNote(note)}
+                            className="bg-zinc-700 hover:bg-synth-blue hover:text-black transition-all p-8 rounded-md font-mono font-bold flex-1"
+                        >
+                            {note}
+                        </button>
+                    ))}
                 </div>
             )}
-            <p style={{ marginTop: '20px', fontSize: '0.8rem', color: '#888' }}>
-                Note: This example uses the shared <code>engine</code> instance.
+            
+            <p className="mt-4 text-xs text-zinc-500 italic">
+                Uses the <code>useAudioEngine</code> hook for state management.
             </p>
         </div>
     );
