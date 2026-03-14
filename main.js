@@ -193,6 +193,10 @@ document.getElementById('wavetable-select').addEventListener('change', (e) => {
 
 document.getElementById('wt-pos').addEventListener('input', updateWavetable);
 
+document.getElementById('filter-type').addEventListener('change', (e) => {
+    if (filter) filter.type = e.target.value;
+});
+
 document.getElementById('filter-cutoff').addEventListener('input', (e) => {
     if (filter) filter.frequency.value = parseFloat(e.target.value);
 });

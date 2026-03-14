@@ -39,7 +39,8 @@ The goal is to create a fully functional, polyphonic wavetable synthesizer that 
     - Chorus/Flanger
 
 ### Phase 5: UI/UX & Interactivity
-- [ ] **Interactive Knobs/Sliders**: Custom SVG or Canvas-based controls.
+- [x] **Modular Rack Layout**: Horizontal grid design for better visibility (v0.6)
+- [x] **Interactive Knobs/Sliders**: Basic range sliders implemented.
 - [x] **Keyboard Support**: On-screen piano roll and QWERTY mapping (v0.3)
 - [ ] **MIDI Support**: Web MIDI API for external controller integration.
 - [ ] **Preset System**: JSON-based preset loading and saving.
