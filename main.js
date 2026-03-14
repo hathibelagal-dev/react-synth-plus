@@ -33,6 +33,34 @@ const startButton = document.getElementById('start-audio');
 const canvas = document.getElementById('oscilloscope');
 const ctx = canvas.getContext('2d');
 
+// Performance Monitoring
+let frameCount = 0;
+let lastTime = performance.now();
+const fpsElement = document.getElementById('fps-counter');
+const voicesElement = document.getElementById('voice-counter');
+
+function updatePerformance() {
+    frameCount++;
+    const now = performance.now();
+    
+    if (now - lastTime >= 1000) {
+        const fps = Math.round((frameCount * 1000) / (now - lastTime));
+        fpsElement.innerText = fps;
+        
+        // Update voice count
+        // Note: activeNoteCount is already tracked globally
+        voicesElement.innerText = activeNoteCount;
+        
+        frameCount = 0;
+        lastTime = now;
+    }
+    
+    requestAnimationFrame(updatePerformance);
+}
+
+// Start performance loop
+updatePerformance();
+
 function draw() {
     requestAnimationFrame(draw);
     if (!waveform) return;
