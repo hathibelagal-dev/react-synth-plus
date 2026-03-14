@@ -25,6 +25,9 @@ let filter;
 let distortion;
 let reverb;
 let delay;
+let lfo;
+let lfoGain;
+let lfoTarget = null; // Current target parameter
 let waveform;
 let isStarted = false;
 const startButton = document.getElementById('start-audio');
@@ -145,6 +148,17 @@ async function initAudio() {
         type: 'lowpass',
         rolloff: -12
     });
+
+    // LFO Setup
+    lfo = new Tone.LFO({
+        frequency: 1,
+        type: 'sine',
+        min: -1,
+        max: 1
+    }).start();
+    
+    lfoGain = new Tone.Gain(0); // Modulation Depth
+    lfo.connect(lfoGain);
 
     distortion = new Tone.Distortion(0).connect(filter);
     
@@ -290,6 +304,40 @@ window.addEventListener('keyup', (e) => {
         pressedKeys.delete(key);
         stopNote(keyMap[key]);
     }
+});
+
+// LFO UI Listeners
+document.getElementById('lfo-type').addEventListener('change', (e) => {
+    if (lfo) lfo.type = e.target.value;
+});
+
+document.getElementById('lfo-rate').addEventListener('input', (e) => {
+    if (lfo) lfo.frequency.value = parseFloat(e.target.value);
+});
+
+document.getElementById('lfo-depth').addEventListener('input', (e) => {
+    if (lfoGain) lfoGain.gain.value = parseFloat(e.target.value);
+});
+
+document.getElementById('lfo-target').addEventListener('change', (e) => {
+    if (!lfoGain) return;
+    
+    // Disconnect from previous target if exists
+    if (lfoTarget) {
+        try {
+            lfoGain.disconnect(lfoTarget);
+        } catch (err) {
+            console.log("Cleanup disconnect", err);
+        }
+        lfoTarget = null;
+    }
+
+    const target = e.target.value;
+    if (target === 'cutoff' && filter) {
+        lfoTarget = filter.frequency;
+        lfoGain.connect(lfoTarget);
+    }
+    // Add more targets here later (e.g. Wavetable Pos)
 });
 
 // Parameter Updates

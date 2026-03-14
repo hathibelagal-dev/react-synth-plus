@@ -27,8 +27,8 @@ The goal is to create a fully functional, polyphonic wavetable synthesizer that 
 
 ### Phase 3: Modulation & Routing
 - [x] **Envelopes (ADSR)**: Dedicated envelopes for Amplitude (v0.1)
-- [ ] **LFOs**: Customizable shapes with rate/sync options.
-- [ ] **Modulation Matrix**: A system to map sources (LFO, Env, Velocity) to destinations (Cutoff, Wavetable Pos, Pitch).
+- [x] **LFOs**: Customizable shapes with rate and routing to Filter Cutoff (v0.11)
+- [ ] **Modulation Matrix**: A system to map sources (LFO, Env, Velocity) to destinations.
 
 ### Phase 4: Filters & Effects
 - [x] **Multi-mode Filter**: Lowpass, Highpass, Bandpass (v0.6)
