@@ -17,6 +17,11 @@ const wavetables = {
 let currentWT = 'basic';
 let currentWTFrame = 0;
 
+let polySynth;
+let filter;
+let isStarted = false;
+const startButton = document.getElementById('start-audio');
+
 // Interpolation Function
 function interpolatePartials(pos, table) {
     const frameCount = table.length;
