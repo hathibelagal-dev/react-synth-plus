@@ -1,15 +1,15 @@
-# Project Plan: ReactSynthPlus
+# Project Plan: ReactSynthPlus (v0.7 - React Refactor)
 
-A high-performance, web-based wavetable synthesizer inspired by Xfer Serum, built using Tone.js, HTML5 Canvas, and modern JavaScript.
+A high-performance, web-based wavetable synthesizer inspired by Xfer Serum, built using Tone.js, React, and modern JavaScript.
 
 ## 1. Overview
-The goal is to create a fully functional, polyphonic wavetable synthesizer that runs in the browser. It will feature dual wavetable oscillators, a sub-oscillator, a noise generator, multi-mode filters, and a flexible modulation system (LFOs/Envelopes).
+The goal is to create a fully functional, polyphonic wavetable synthesizer that runs in the browser. It features dual wavetable oscillators, a sub-oscillator, a noise generator, multi-mode filters, and a flexible modulation system (LFOs/Envelopes).
 
 ## 2. Core Architecture
 - **Audio Engine**: Tone.js (Web Audio API wrapper).
 - **Polyphony**: `Tone.PolySynth` managing multiple voice instances.
 - **Synthesis Type**: Wavetable synthesis using `PeriodicWave` and custom partials.
-- **UI Framework**: Vanilla JS or React (for state management of parameters).
+- **UI Framework**: React (for state management of parameters).
 - **Visualization**: HTML5 Canvas / WebGL for real-time waveform and spectrum display.
 
 ## 3. Feature Set
@@ -19,6 +19,7 @@ The goal is to create a fully functional, polyphonic wavetable synthesizer that 
 - [x] **Sub-Oscillator**: Dedicated sub-osc with octave and waveform control (v0.9)
 - [x] **Noise Generator**: White/Pink/Brownian noise with filtering (v0.10)
 - [x] **Polyphonic Management**: PolySynth implementation with keyboard UI (v0.2)
+- [x] **React Refactor**: Migrated from Vanilla JS to React (v0.7)
 
 ### Phase 2: Wavetable Engine
 - [x] **Wavetable Morphing**: Interpolation between partial sets via WT POS slider (v0.4)
