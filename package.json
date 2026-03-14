@@ -16,6 +16,7 @@
     "tone": "^14.8.49"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.1",
     "@testing-library/jest-dom": "^6.1.2",
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.15",
