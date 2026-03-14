@@ -322,12 +322,16 @@ document.getElementById('lfo-depth').addEventListener('input', (e) => {
 document.getElementById('lfo-target').addEventListener('change', (e) => {
     if (!lfoGain) return;
     
-    // Disconnect from previous target if exists
+    // Disconnect from previous target(s)
     if (lfoTarget) {
         try {
-            lfoGain.disconnect(lfoTarget);
+            if (Array.isArray(lfoTarget)) {
+                lfoTarget.forEach(t => lfoGain.disconnect(t));
+            } else {
+                lfoGain.disconnect(lfoTarget);
+            }
         } catch (err) {
-            console.log("Cleanup disconnect", err);
+            console.log("Modulation cleanup error", err);
         }
         lfoTarget = null;
     }
@@ -336,8 +340,12 @@ document.getElementById('lfo-target').addEventListener('change', (e) => {
     if (target === 'cutoff' && filter) {
         lfoTarget = filter.frequency;
         lfoGain.connect(lfoTarget);
+    } else if (target === 'pitch') {
+        // Modulate detune for both synths
+        lfoGain.connect(polySynth.detune);
+        lfoGain.connect(subSynth.detune);
+        lfoTarget = [polySynth.detune, subSynth.detune];
     }
-    // Add more targets here later (e.g. Wavetable Pos)
 });
 
 // Parameter Updates
