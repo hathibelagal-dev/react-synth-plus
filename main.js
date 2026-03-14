@@ -18,6 +18,7 @@ let currentWT = 'basic';
 let currentWTFrame = 0;
 
 let polySynth;
+let subSynth;
 let filter;
 let distortion;
 let reverb;
@@ -148,6 +149,20 @@ async function initAudio() {
         }
     }).connect(reverb);
 
+    // Sub Oscillator
+    subSynth = new Tone.PolySynth(Tone.Synth, {
+        oscillator: {
+            type: 'square'
+        },
+        envelope: {
+            attack: 0.1,
+            decay: 0.2,
+            sustain: 0.5,
+            release: 1
+        }
+    }).connect(reverb);
+    subSynth.volume.value = -6; // Default volume
+
     isStarted = true;
     startButton.classList.add('active');
     startButton.innerText = 'Audio Engine Running';
@@ -175,14 +190,28 @@ keys.forEach(key => {
 function playNote(keyElement) {
     if (!isStarted || keyElement.classList.contains('active')) return;
     const note = keyElement.getAttribute('data-note');
+    
+    // Main Synth
     polySynth.triggerAttack(note);
+
+    // Sub Synth (e.g. C4 -> C2)
+    const subOctaveOffset = parseInt(document.getElementById('sub-octave').value);
+    const subNote = Tone.Frequency(note).transpose(subOctaveOffset * 12).toNote();
+    subSynth.triggerAttack(subNote);
+
     keyElement.classList.add('active');
 }
 
 function stopNote(keyElement) {
     if (!isStarted || !keyElement.classList.contains('active')) return;
     const note = keyElement.getAttribute('data-note');
+    
     polySynth.triggerRelease(note);
+
+    const subOctaveOffset = parseInt(document.getElementById('sub-octave').value);
+    const subNote = Tone.Frequency(note).transpose(subOctaveOffset * 12).toNote();
+    subSynth.triggerRelease(subNote);
+
     keyElement.classList.remove('active');
 }
 
@@ -220,20 +249,29 @@ document.getElementById('filter-cutoff').addEventListener('input', (e) => {
     if (filter) filter.frequency.value = parseFloat(e.target.value);
 });
 
-document.getElementById('env-attack').addEventListener('input', (e) => {
-    if (polySynth) {
-        polySynth.set({
-            envelope: { attack: parseFloat(e.target.value) }
-        });
+// Sub Oscillator UI Listeners
+document.getElementById('sub-type').addEventListener('change', (e) => {
+    if (subSynth) subSynth.set({ oscillator: { type: e.target.value } });
+});
+
+document.getElementById('sub-volume').addEventListener('input', (e) => {
+    if (subSynth) {
+        // Map 0-1 range to dB (-60 to 0)
+        const vol = parseFloat(e.target.value);
+        subSynth.volume.value = vol === 0 ? -Infinity : Tone.gainToDb(vol);
     }
 });
 
+document.getElementById('env-attack').addEventListener('input', (e) => {
+    const val = parseFloat(e.target.value);
+    if (polySynth) polySynth.set({ envelope: { attack: val } });
+    if (subSynth) subSynth.set({ envelope: { attack: val } });
+});
+
 document.getElementById('env-release').addEventListener('input', (e) => {
-    if (polySynth) {
-        polySynth.set({
-            envelope: { release: parseFloat(e.target.value) }
-        });
-    }
+    const val = parseFloat(e.target.value);
+    if (polySynth) polySynth.set({ envelope: { release: val } });
+    if (subSynth) subSynth.set({ envelope: { release: val } });
 });
 
 document.getElementById('fx-dist').addEventListener('input', (e) => {

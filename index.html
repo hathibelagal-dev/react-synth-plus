@@ -30,6 +30,25 @@
                 <label>WT POS <input type="range" id="wt-pos" min="0" max="1" step="0.01" value="0"></label>
             </div>
 
+            <div class="module sub-osc">
+                <h3>Sub Oscillator</h3>
+                <label>Waveform
+                    <select id="sub-type">
+                        <option value="sine">Sine</option>
+                        <option value="square">Square</option>
+                        <option value="sawtooth">Sawtooth</option>
+                        <option value="triangle">Triangle</option>
+                    </select>
+                </label>
+                <label>Volume <input type="range" id="sub-volume" min="0" max="1" step="0.01" value="0.5"></label>
+                <label>Octave
+                    <select id="sub-octave">
+                        <option value="-1">-1 Oct</option>
+                        <option value="-2" selected>-2 Oct</option>
+                    </select>
+                </label>
+            </div>
+
             <div class="module filter">
                 <h3>Filter</h3>
                 <label>Mode
