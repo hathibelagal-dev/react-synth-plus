@@ -69,7 +69,11 @@ Use `Tone.connect` and `Tone.Signal` to route modulation sources.
 4. **Week 4**: Effects, Filters, and Preset Management.
 5. **Week 5**: UI Polishing, MIDI Support, and Performance Optimization.
 
-## 6. Verification & Testing
+## 7. Examples
+- [x] **Basic Trigger**: Simple note triggering example (v0.7)
+- [x] **Drone Machine**: Automated parameter modulation example (v0.7)
+
+## 8. Verification & Testing
 - [x] **Unit Tests**: Test modulation math, envelope timing, and audio engine logic (v0.7)
 - [x] **Component Tests**: Test UI interactions and React component rendering (v0.7)
 - **Performance**: Monitor CPU usage (Web Audio nodes) to ensure polyphony doesn't crackle on mid-range devices.
