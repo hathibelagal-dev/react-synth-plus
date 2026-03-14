@@ -84,7 +84,7 @@ This repository includes a comprehensive **Showcase Project** that demonstrates 
 
 ### Run the Showcase
 ```bash
-git clone https://github.com/your-repo/react-synth-plus.git
+git clone https://github.com/hathibelagal-dev/react-synth-plus.git
 cd react-synth-plus
 npm install
 npm run dev:showcase
