@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>React Synth Plus – Standalone Demo</title>
+  
+  <!-- Core Dependencies -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/tone@14"></script>
+  
+  <!-- Local Build (Run 'npm run build:lib' first) -->
+  <script src="../dist/react-synth-plus.umd.js"></script>
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #09090b;
+      color: #eee;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+    }
+    h1 { margin-bottom: 0.2em; color: #00d2ff; letter-spacing: -0.02em; font-weight: 800; }
+    .instructions {
+      max-width: 500px;
+      text-align: center;
+      margin: 0.5em 0 3em;
+      color: #71717a;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .keyboard {
+      display: flex;
+      background: #000;
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    .key {
+      cursor: pointer;
+      border: 1px solid #000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 12px;
+      box-sizing: border-box;
+      font-size: 10px;
+      font-weight: 800;
+      user-select: none;
+      transition: background 0.05s;
+    }
+    .key.white {
+      width: 50px;
+      height: 180px;
+      background: #f4f4f5;
+      color: #18181b;
+      border-radius: 0 0 6px 6px;
+      z-index: 1;
+    }
+    .key.black {
+      width: 32px;
+      height: 110px;
+      background: #18181b;
+      margin-left: -16px;
+      margin-right: -16px;
+      z-index: 2;
+      color: #71717a;
+      border-radius: 0 0 4px 4px;
+    }
+    .key.pressed.white { background: #00d2ff !important; }
+    .key.pressed.black { background: #00708a !important; color: white; }
+    
+    .init-btn {
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s;
+      box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+    }
+    .init-btn:hover { background: #ff3333; transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+
+  <h1>ReactSynth+</h1>
+  <p class="instructions">
+    A high-performance wavetable synth engine.<br>
+    Initialize to begin. Use <strong>ASDF...</strong> or click to play.
+  </p>
+
+  <div id="root"></div>
+
+  <!-- Babel for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    // Access hooks from the global UMD variable 'ReactSynthPlus'
+    const { useAudioEngine, useKeyboard } = window.ReactSynthPlus;
+
+    function SynthApp() {
+      const { isStarted, init } = useAudioEngine();
+      
+      // useKeyboard handles both mouse/touch and computer keyboard (ASDF...)
+      const { pressedNotes, playNote, stopNote, keys } = useKeyboard();
+
+      if (!isStarted) {
+        return (
+          <button className="init-btn" onClick={init}>
+            INITIALIZE ENGINE
+          </button>
+        );
+      }
+
+      return (
+        <div className="keyboard">
+          {keys.map(({ note, key, type }) => (
+            <div
+              key={note}
+              className={`key ${type} ${pressedNotes.has(note) ? 'pressed' : ''}`}
+              onMouseDown={() => playNote(note)}
+              onMouseUp={() => stopNote(note)}
+              onMouseLeave={() => stopNote(note)}
+              onTouchStart={(e) => { e.preventDefault(); playNote(note); }}
+              onTouchEnd={(e) => { e.preventDefault(); stopNote(note); }}
+            >
+              <span>{key.toUpperCase()}</span>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<SynthApp />);
+  </script>
+
+</body>
+</html>
