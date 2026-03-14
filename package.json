@@ -1,12 +1,26 @@
 {
-  "name": "react-synth-plus",
-  "private": true,
-  "version": "0.0.1",
+  "name": "@google/react-synth-plus",
+  "version": "1.0.0",
+  "description": "A high-performance, headless wavetable synthesizer for React built on Tone.js",
+  "author": "Gemini CLI",
+  "license": "MIT",
   "type": "module",
+  "main": "./dist/react-synth-plus.umd.cjs",
+  "module": "./dist/react-synth-plus.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/react-synth-plus.js",
+      "require": "./dist/react-synth-plus.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "dev:showcase": "VITE_SHOWCASE=true vite",
     "build": "vite build",
+    "build:lib": "vite build --mode library",
     "preview": "vite preview",
     "test": "vitest"
   },
