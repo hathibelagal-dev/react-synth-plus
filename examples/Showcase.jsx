@@ -10,8 +10,8 @@ import App from '../src/App';
  */
 const Showcase = () => {
     return (
-        <div className="min-h-screen bg-zinc-950 p-10 flex flex-col items-center gap-10">
-            <header className="text-center">
+        <div className="min-h-screen bg-zinc-950 p-10 flex flex-col gap-10">
+            <header className="">
                 <h1 className="text-4xl font-extrabold text-white mb-2 tracking-tighter">
                     ReactSynth+ <span className="text-synth-blue">Showcase</span>
                 </h1>
@@ -20,24 +20,26 @@ const Showcase = () => {
                 </p>
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-7xl">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 w-full">
                 {/* Standalone Examples Section */}
-                <div className="flex flex-col gap-8">
+                <div className="lg:col-span-4 flex flex-col gap-8">
                     <section>
-                        <h3 className="text-sm font-bold text-zinc-600 uppercase tracking-widest mb-4">Example: Standalone Note Trigger</h3>
+                        <h3 className="text-sm font-bold text-zinc-600 uppercase tracking-widest mb-4 border-b border-zinc-800 pb-2">Example: Standalone Note Trigger</h3>
                         <BasicTrigger />
                     </section>
                     
                     <section>
-                        <h3 className="text-sm font-bold text-zinc-600 uppercase tracking-widest mb-4">Example: Evolving Drone Soundscape</h3>
+                        <h3 className="text-sm font-bold text-zinc-600 uppercase tracking-widest mb-4 border-b border-zinc-800 pb-2">Example: Evolving Drone Soundscape</h3>
                         <DroneMachine />
                     </section>
                 </div>
 
                 {/* Main Application Section */}
-                <div className="flex flex-col gap-4">
-                    <h3 className="text-sm font-bold text-zinc-600 uppercase tracking-widest mb-4">Main Component: Full Synthesizer Interface</h3>
-                    <App />
+                <div className="lg:col-span-8 flex flex-col gap-4">
+                    <h3 className="text-sm font-bold text-zinc-600 uppercase tracking-widest mb-4 border-b border-zinc-800 pb-2">Main Component: Full Synthesizer Interface</h3>
+                    <div className="flex justify-center lg:justify-start">
+                        <App />
+                    </div>
                 </div>
             </div>
 
