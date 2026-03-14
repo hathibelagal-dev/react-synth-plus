@@ -336,7 +336,3 @@ document.getElementById('fx-delay-time').addEventListener('input', (e) => {
 document.getElementById('fx-delay-feedback').addEventListener('input', (e) => {
     if (delay) delay.feedback.value = parseFloat(e.target.value);
 });
-
-document.getElementById('fx-reverb-size').addEventListener('input', (e) => {
-    // Note: Reverb size was removed from UI in this iteration, keeping for logic consistency
-});
