@@ -1,9 +1,9 @@
 {
-  "name": "@google/react-synth-plus",
+  "name": "react-synth-plus",
   "version": "1.0.0",
   "description": "A high-performance, headless wavetable synthesizer for React built on Tone.js",
-  "author": "Gemini CLI",
-  "license": "MIT",
+  "author": "Ashraff Hathibelagal",
+  "license": "GPL-3.0-only",
   "type": "module",
   "main": "./dist/react-synth-plus.umd.cjs",
   "module": "./dist/react-synth-plus.js",
