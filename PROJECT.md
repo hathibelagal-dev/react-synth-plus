@@ -70,6 +70,7 @@ Use `Tone.connect` and `Tone.Signal` to route modulation sources.
 5. **Week 5**: UI Polishing, MIDI Support, and Performance Optimization.
 
 ## 6. Verification & Testing
-- **Unit Tests**: Test modulation math and envelope timing.
+- [x] **Unit Tests**: Test modulation math, envelope timing, and audio engine logic (v0.7)
+- [x] **Component Tests**: Test UI interactions and React component rendering (v0.7)
 - **Performance**: Monitor CPU usage (Web Audio nodes) to ensure polyphony doesn't crackle on mid-range devices.
 - **UX**: Verify MIDI latency and knob responsiveness.
