@@ -5,15 +5,17 @@
   "author": "Ashraff Hathibelagal",
   "license": "GPL-3.0-only",
   "type": "module",
-  "main": "./dist/react-synth-plus.umd.cjs",
-  "module": "./dist/react-synth-plus.js",
+  "main": "./dist/react-synth-plus.umd.js",
+  "module": "./dist/react-synth-plus.es.js",
+  "unpkg": "./dist/react-synth-plus.umd.js",
+  "jsdelivr": "./dist/react-synth-plus.umd.js",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "import": "./dist/react-synth-plus.js",
-      "require": "./dist/react-synth-plus.umd.cjs"
+      "import": "./dist/react-synth-plus.es.js",
+      "require": "./dist/react-synth-plus.umd.js"
     }
   },
   "scripts": {
