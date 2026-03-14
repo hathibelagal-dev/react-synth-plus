@@ -1,2 +1,128 @@
-# React Synth Plus
-A powerful synth that runs in the browser and can be used as a react component
+# 🎹 React Synth Plus
+
+**React Synth Plus** is a high-performance, headless wavetable synthesizer for React, built on top of the powerful [Tone.js](https://tonejs.github.io/) engine. Inspired by legendary synthesizers like Xfer Serum, it brings professional-grade audio synthesis to the browser with a modern, reactive developer experience.
+
+---
+
+## ✨ Key Features
+
+- 🚀 **Headless Architecture**: Complete separation of audio logic and UI. Build your own synth interface using our custom React hooks.
+- 🌊 **Wavetable Engine**: Smooth morphing between complex wavetable partials.
+- 🎸 **Built-in FX Rack**: Professional distortion, reverb, and feedback delay out of the box.
+- 🎹 **Intelligent Keyboard Hook**: Effortless QWERTY-to-MIDI mapping and polyphonic note management.
+- 🎨 **Tailwind CSS Ready**: Designed to work seamlessly with utility-first styling.
+- 🧪 **Rock Solid**: Fully tested with Vitest and React Testing Library.
+
+---
+
+## 📦 Installation
+
+```bash
+npm install react-synth-plus
+```
+
+*Note: Ensure you have `react`, `react-dom`, and `tone` installed in your project.*
+
+---
+
+## 🚀 Quick Start
+
+### 1. Basic Note Triggering
+Use the `useAudioEngine` hook to control the synth's lifecycle and parameters.
+
+```jsx
+import { useAudioEngine } from 'react-synth-plus';
+
+const MySynth = () => {
+  const { isStarted, init, engine } = useAudioEngine();
+
+  return (
+    <div>
+      {!isStarted ? (
+        <button onClick={init}>Initialize Audio</button>
+      ) : (
+        <button onMouseDown={() => engine.playNote('C4')} onMouseUp={() => engine.stopNote('C4')}>
+          Play C4
+        </button>
+      )}
+    </div>
+  );
+};
+```
+
+### 2. Building a Keyboard
+Leverage `useKeyboard` for instant on-screen and QWERTY keyboard support.
+
+```jsx
+import { useKeyboard } from 'react-synth-plus';
+
+const MyKeyboard = () => {
+  const { pressedNotes, playNote, stopNote, keys } = useKeyboard();
+
+  return (
+    <div className="flex gap-1">
+      {keys.map(({ note, key, type }) => (
+        <div
+          key={note}
+          className={`p-4 border ${pressedNotes.has(note) ? 'bg-blue-500' : 'bg-white'}`}
+          onMouseDown={() => playNote(note)}
+          onMouseUp={() => stopNote(note)}
+        >
+          {key.toUpperCase()}
+        </div>
+      ))}
+    </div>
+  );
+};
+```
+
+---
+
+## 🛠️ Development & Examples
+
+This repository includes a comprehensive **Showcase Project** that demonstrates all features in a single dashboard.
+
+### Run the Showcase
+```bash
+git clone https://github.com/your-repo/react-synth-plus.git
+cd react-synth-plus
+npm install
+npm run dev:showcase
+```
+
+### Building the Library
+```bash
+npm run build:lib
+```
+
+### Running Tests
+```bash
+npm test
+```
+
+---
+
+## 📐 Architecture
+
+```text
+[Your UI Components] <---> [Headless Hooks] <---> [Audio Engine (Tone.js)]
+      (Tailwind)          (useAudioEngine)         (PolySynth, FX)
+```
+
+---
+
+## 📜 License
+
+Distributed under the **GPL v3 License**. See `LICENSE` for more information.
+
+---
+
+## 👤 Author
+
+**Ashraff Hathibelagal**
+- Professional Software Developer
+- Audio Synthesis Enthusiast
+
+---
+
+*Made with ❤️ and a lot of oscillators.*
