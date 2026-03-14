@@ -2,8 +2,6 @@
 
 [![NPM Version](https://img.shields.io/npm/v/react-synth-plus?color=00d2ff&style=flat-square)](https://www.npmjs.com/package/react-synth-plus)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0)
-[![Bundle Size](https://img.shields.io/bundlephobia/min/react-synth-plus?color=green&style=flat-square)](https://bundlephobia.com/package/react-synth-plus)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 **React Synth Plus** is a high-performance, headless wavetable synthesizer for React, built on top of the powerful [Tone.js](https://tonejs.github.io/) engine. Inspired by legendary synthesizers like Xfer Serum, it brings professional-grade audio synthesis to the browser with a modern, reactive developer experience.
 
