@@ -21,6 +21,7 @@ let polySynth;
 let filter;
 let distortion;
 let reverb;
+let delay;
 let waveform;
 let isStarted = false;
 const startButton = document.getElementById('start-audio');
@@ -116,10 +117,16 @@ async function initAudio() {
 
     distortion = new Tone.Distortion(0).connect(filter);
     
+    delay = new Tone.FeedbackDelay({
+        delayTime: 0.3,
+        feedback: 0.4
+    }).connect(distortion);
+    delay.wet.value = 0;
+
     reverb = new Tone.Freeverb({
         roomSize: 0.5,
         dampening: 3000
-    }).connect(distortion);
+    }).connect(delay);
     reverb.wet.value = 0.1;
 
     filter.toDestination();
@@ -237,6 +244,18 @@ document.getElementById('fx-reverb-mix').addEventListener('input', (e) => {
     if (reverb) reverb.wet.value = parseFloat(e.target.value);
 });
 
+document.getElementById('fx-delay-mix').addEventListener('input', (e) => {
+    if (delay) delay.wet.value = parseFloat(e.target.value);
+});
+
+document.getElementById('fx-delay-time').addEventListener('input', (e) => {
+    if (delay) delay.delayTime.value = parseFloat(e.target.value);
+});
+
+document.getElementById('fx-delay-feedback').addEventListener('input', (e) => {
+    if (delay) delay.feedback.value = parseFloat(e.target.value);
+});
+
 document.getElementById('fx-reverb-size').addEventListener('input', (e) => {
-    if (reverb) reverb.roomSize.value = parseFloat(e.target.value);
+    // Note: Reverb size was removed from UI in this iteration, keeping for logic consistency
 });

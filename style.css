@@ -70,6 +70,12 @@ h1 {
     padding-bottom: 5px;
 }
 
+.fx-divider {
+    height: 1px;
+    background: #444;
+    margin: 4px 0;
+}
+
 label {
     display: flex;
     flex-direction: column;

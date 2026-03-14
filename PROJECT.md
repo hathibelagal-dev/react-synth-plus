@@ -34,7 +34,7 @@ The goal is to create a fully functional, polyphonic wavetable synthesizer that 
 - [x] **Multi-mode Filter**: Lowpass, Highpass, Bandpass (v0.6)
 - [x] **FX Rack**: 
     - [x] Reverb (Freeverb) (v0.7)
-    - [ ] Delay (Ping-pong/Stereo)
+    - [x] Delay (FeedbackDelay) (v0.8)
     - [x] Distortion (Waveshaper) (v0.7)
     - [ ] Chorus/Flanger
 
