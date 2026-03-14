@@ -19,6 +19,8 @@ let currentWTFrame = 0;
 
 let polySynth;
 let filter;
+let distortion;
+let reverb;
 let waveform;
 let isStarted = false;
 const startButton = document.getElementById('start-audio');
@@ -110,7 +112,17 @@ async function initAudio() {
         frequency: 2000,
         type: 'lowpass',
         rolloff: -12
-    }).toDestination();
+    });
+
+    distortion = new Tone.Distortion(0).connect(filter);
+    
+    reverb = new Tone.Freeverb({
+        roomSize: 0.5,
+        dampening: 3000
+    }).connect(distortion);
+    reverb.wet.value = 0.1;
+
+    filter.toDestination();
 
     waveform = new Tone.Waveform(1024);
     Tone.Destination.connect(waveform);
@@ -127,7 +139,7 @@ async function initAudio() {
             sustain: 0.5,
             release: 1
         }
-    }).connect(filter);
+    }).connect(reverb);
 
     isStarted = true;
     startButton.classList.add('active');
@@ -215,4 +227,16 @@ document.getElementById('env-release').addEventListener('input', (e) => {
             envelope: { release: parseFloat(e.target.value) }
         });
     }
+});
+
+document.getElementById('fx-dist').addEventListener('input', (e) => {
+    if (distortion) distortion.distortion = parseFloat(e.target.value);
+});
+
+document.getElementById('fx-reverb-mix').addEventListener('input', (e) => {
+    if (reverb) reverb.wet.value = parseFloat(e.target.value);
+});
+
+document.getElementById('fx-reverb-size').addEventListener('input', (e) => {
+    if (reverb) reverb.roomSize.value = parseFloat(e.target.value);
 });

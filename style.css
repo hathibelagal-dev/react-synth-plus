@@ -47,7 +47,7 @@ h1 {
 
 .controls {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1.2fr;
     gap: 1rem;
 }
 
@@ -108,7 +108,7 @@ button:hover { background: #00b8e6; }
 button#start-audio {
     background: #ff4d4d;
     color: white;
-    grid-column: span 3;
+    grid-column: span 4;
 }
 
 button#start-audio.active {

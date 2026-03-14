@@ -31,12 +31,12 @@ The goal is to create a fully functional, polyphonic wavetable synthesizer that 
 - [ ] **Modulation Matrix**: A system to map sources (LFO, Env, Velocity) to destinations (Cutoff, Wavetable Pos, Pitch).
 
 ### Phase 4: Filters & Effects
-- [x] **Multi-mode Filter**: Lowpass (v0.1)
-- [ ] **FX Rack**: 
-    - Reverb (Convolver or Feedback)
-    - Delay (Ping-pong/Stereo)
-    - Distortion (Waveshaper)
-    - Chorus/Flanger
+- [x] **Multi-mode Filter**: Lowpass, Highpass, Bandpass (v0.6)
+- [x] **FX Rack**: 
+    - [x] Reverb (Freeverb) (v0.7)
+    - [ ] Delay (Ping-pong/Stereo)
+    - [x] Distortion (Waveshaper) (v0.7)
+    - [ ] Chorus/Flanger
 
 ### Phase 5: UI/UX & Interactivity
 - [x] **Modular Rack Layout**: Horizontal grid design for better visibility (v0.6)
