@@ -167,14 +167,16 @@ async function initAudio() {
 
     // Noise Generator
     noise = new Tone.Noise('white').start();
+    noise.volume.value = -Infinity; // Start silent
+
     noiseEnv = new Tone.AmplitudeEnvelope({
         attack: 0.1,
         decay: 0.2,
         sustain: 0.5,
         release: 1
     }).connect(reverb);
+    
     noise.connect(noiseEnv);
-    noiseEnv.volume.value = -Infinity; // Start silent
 
     isStarted = true;
     startButton.classList.add('active');
@@ -311,9 +313,9 @@ document.getElementById('noise-type').addEventListener('change', (e) => {
 });
 
 document.getElementById('noise-volume').addEventListener('input', (e) => {
-    if (noiseEnv) {
+    if (noise) {
         const vol = parseFloat(e.target.value);
-        noiseEnv.volume.value = vol === 0 ? -Infinity : Tone.gainToDb(vol);
+        noise.volume.value = vol === 0 ? -Infinity : Tone.gainToDb(vol);
     }
 });
 
