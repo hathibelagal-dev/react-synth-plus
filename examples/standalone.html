@@ -28,7 +28,7 @@
     .instructions {
       max-width: 500px;
       text-align: center;
-      margin: 0.5em 0 3em;
+      margin: 0.5em 0 2em;
       color: #71717a;
       font-size: 0.9rem;
       line-height: 1.5;
@@ -39,6 +39,7 @@
       padding: 12px;
       border-radius: 12px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      margin-top: 20px;
     }
     .key {
       cursor: pointer;
@@ -87,6 +88,37 @@
       box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
     }
     .init-btn:hover { background: #ff3333; transform: translateY(-2px); }
+
+    .controls {
+      display: flex;
+      gap: 20px;
+      background: #18181b;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #27272a;
+      width: 100%;
+      max-width: 600px;
+      justify-content: center;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+    .control-group label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: #71717a;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .control-group input[type="range"] {
+      width: 100%;
+      accent-color: #00d2ff;
+      cursor: pointer;
+    }
+    .val-display { color: #00d2ff; font-family: monospace; float: right; }
   </style>
 </head>
 <body>
@@ -103,14 +135,21 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script type="text/babel">
-    // Access hooks from the global UMD variable 'ReactSynthPlus'
     const { useAudioEngine, useKeyboard } = window.ReactSynthPlus;
 
     function SynthApp() {
-      const { isStarted, init } = useAudioEngine();
-      
-      // useKeyboard handles both mouse/touch and computer keyboard (ASDF...)
+      const { isStarted, init, setParam } = useAudioEngine();
       const { pressedNotes, playNote, stopNote, keys } = useKeyboard();
+      
+      const [params, setParams] = React.useState({
+        cutoff: 2000,
+        wtPos: 0
+      });
+
+      const updateVal = (module, param, val) => {
+        setParam(module, param, val);
+        setParams(prev => ({ ...prev, [param]: val }));
+      };
 
       if (!isStarted) {
         return (
@@ -121,20 +160,41 @@
       }
 
       return (
-        <div className="keyboard">
-          {keys.map(({ note, key, type }) => (
-            <div
-              key={note}
-              className={`key ${type} ${pressedNotes.has(note) ? 'pressed' : ''}`}
-              onMouseDown={() => playNote(note)}
-              onMouseUp={() => stopNote(note)}
-              onMouseLeave={() => stopNote(note)}
-              onTouchStart={(e) => { e.preventDefault(); playNote(note); }}
-              onTouchEnd={(e) => { e.preventDefault(); stopNote(note); }}
-            >
-              <span>{key.toUpperCase()}</span>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', width: '100%' }}>
+          <div className="controls">
+            <div className="control-group">
+              <label>Filter Cutoff <span className="val-display">{Math.round(params.cutoff)}Hz</span></label>
+              <input 
+                type="range" min="20" max="10000" step="1" 
+                value={params.cutoff} 
+                onChange={(e) => updateVal('filter', 'cutoff', parseFloat(e.target.value))} 
+              />
             </div>
-          ))}
+            <div className="control-group">
+              <label>Wavetable Pos <span className="val-display">{params.wtPos.toFixed(2)}</span></label>
+              <input 
+                type="range" min="0" max="1" step="0.01" 
+                value={params.wtPos} 
+                onChange={(e) => updateVal('osc1', 'wtPos', parseFloat(e.target.value))} 
+              />
+            </div>
+          </div>
+
+          <div className="keyboard">
+            {keys.map(({ note, key, type }) => (
+              <div
+                key={note}
+                className={`key ${type} ${pressedNotes.has(note) ? 'pressed' : ''}`}
+                onMouseDown={() => playNote(note)}
+                onMouseUp={() => stopNote(note)}
+                onMouseLeave={() => stopNote(note)}
+                onTouchStart={(e) => { e.preventDefault(); playNote(note); }}
+                onTouchEnd={(e) => { e.preventDefault(); stopNote(note); }}
+              >
+                <span>{key.toUpperCase()}</span>
+              </div>
+            ))}
+          </div>
         </div>
       );
     }
