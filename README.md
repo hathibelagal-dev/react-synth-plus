@@ -54,7 +54,7 @@ const MySynth = () => {
 ```
 
 ### 2. Controlling Parameters
-Manipulate any part of the audio engine (Filters, Envelopes, FX) using the `setParam` function.
+Manipulate any part of the audio engine (Filters, Envelopes, FX) using the `setParam(module, parameter, value)` function.
 
 ```jsx
 import { useAudioEngine } from 'react-synth-plus';
@@ -70,6 +70,18 @@ const FilterControl = () => {
   );
 };
 ```
+
+#### Available Parameters:
+
+| Module | Parameter | Description |
+| :--- | :--- | :--- |
+| **`osc1`** | `wavetable`, `wtPos` | Select table (`basic`, `harmonic`) and morph position (0-1). |
+| **`filter`** | `type`, `cutoff` | Mode (`lowpass`, `highpass`, `bandpass`) and frequency (Hz). |
+| **`sub`** | `type`, `volume` | Waveform and gain (0-1) for the sub oscillator. |
+| **`noise`** | `type`, `volume` | Type (`white`, `pink`, `brown`) and gain (0-1). |
+| **`lfo`** | `type`, `rate`, `depth`, `target` | LFO shape, speed (Hz), depth, and target (`cutoff`, `pitch`). |
+| **`env`** | `attack`, `release` | ADSR timings (seconds) for the master amplitude envelope. |
+| **`fx`** | `dist`, `reverbMix`, `delayMix`, `delayTime`, `delayFeedback` | Global distortion, reverb mix, and delay rack parameters. |
 
 ### 3. Building a Keyboard
 Leverage `useKeyboard` for instant on-screen and QWERTY keyboard support.
