@@ -34,13 +34,13 @@ Demonstrates how to use the library via a UMD bundle in a plain HTML file (no bu
 | File | Description |
 | :--- | :--- |
 | **`Showcase.jsx`** | A master dashboard combining all components and examples. |
-| **`BasicTrigger.jsx`** | The simplest implementation using `useAudioEngine` to trigger notes. |
-| **`DroneMachine.jsx`** | Demonstrates automated parameter modulation for ambient soundscapes. |
+| **`BasicTrigger.jsx`** | Demonstrates note triggering and manual **filter control**. |
+| **`DroneMachine.jsx`** | Demonstrates automated **wavetable morphing** and **FX modulation**. |
 | **`standalone.html`** | A UMD-based example using Babel standalone for JSX. |
 
 ---
 
 ## 💡 Key Concepts
 All React examples leverage the **Headless Hook** pattern:
-- `useAudioEngine`: Manages the lifecycle and core parameters of the synth.
+- `useAudioEngine`: Manages the lifecycle and core parameters of the synth via `setParam(module, param, value)`.
 - `useKeyboard`: Manages polyphonic note triggering and QWERTY mapping.

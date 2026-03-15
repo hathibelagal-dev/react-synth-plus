@@ -53,7 +53,25 @@ const MySynth = () => {
 };
 ```
 
-### 2. Building a Keyboard
+### 2. Controlling Parameters
+Manipulate any part of the audio engine (Filters, Envelopes, FX) using the `setParam` function.
+
+```jsx
+import { useAudioEngine } from 'react-synth-plus';
+
+const FilterControl = () => {
+  const { setParam } = useAudioEngine();
+
+  return (
+    <input 
+      type="range" min="20" max="10000" 
+      onChange={(e) => setParam('filter', 'cutoff', parseFloat(e.target.value))} 
+    />
+  );
+};
+```
+
+### 3. Building a Keyboard
 Leverage `useKeyboard` for instant on-screen and QWERTY keyboard support.
 
 ```jsx
