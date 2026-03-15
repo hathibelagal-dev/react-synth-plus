@@ -150,12 +150,4 @@ Distributed under the **GPL v3 License**. See `LICENSE` for more information.
 
 ---
 
-## 👤 Author
-
-**Ashraff Hathibelagal**
-- Professional Software Developer
-- Audio Synthesis Enthusiast
-
----
-
 *Made with ❤️ and a lot of oscillators.*
