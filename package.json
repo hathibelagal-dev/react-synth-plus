@@ -1,6 +1,6 @@
 {
   "name": "react-synth-plus",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A high-performance, headless wavetable synthesizer for React built on Tone.js",
   "author": "Ashraff Hathibelagal",
   "license": "GPL-3.0-only",
