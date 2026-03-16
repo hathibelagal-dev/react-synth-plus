@@ -26,39 +26,54 @@ npm install react-synth-plus
 
 *Note: Ensure you have `react`, `react-dom`, and `tone` installed in your project.*
 
----
-
-## 🚀 Quick Start
-
 ### 1. Using Pre-built UI Components
 The fastest way to get started. Import the components and the bundled CSS for a professional look.
 
 ```jsx
+import { useState } from 'react';
 import { Keyboard, FilterControl, useAudioEngine } from 'react-synth-plus';
 import 'react-synth-plus/style.css'; // Don't forget the styles!
 
 const MySynth = () => {
   const { isStarted, init, setParam } = useAudioEngine();
-  
-  // You would manage this state in your app
   const [filterState, setFilterState] = useState({ type: 'lowpass', cutoff: 2000 });
 
   return (
-    <div className="synth-dark-theme">
+    <div className="p-10 bg-zinc-950 min-h-screen text-white">
       {!isStarted ? (
-        <button onClick={init}>Start Engine</button>
+        <button className="bg-red-500 p-4 rounded" onClick={init}>Start Engine</button>
       ) : (
-        <>
+        <div className="flex flex-col gap-4">
           <FilterControl value={filterState} onChange={setParam} />
           <Keyboard />
-        </>
+        </div>
       )}
     </div>
   );
 };
 ```
 
-### 2. Basic Note Triggering (Headless)
+---
+
+## 🏗️ UI Component Library
+
+React Synth Plus ships with a set of modular, Tailwind-styled components. To use them, ensure you import `react-synth-plus/style.css`.
+
+| Component | Description |
+| :--- | :--- |
+| **`<Keyboard />`** | A full piano roll with mouse, touch, and QWERTY support. |
+| **`<Visualizer />`** | Real-time HTML5 Canvas oscilloscope. |
+| **`<OscillatorControl />`** | Controls for wavetable selection and morphing. |
+| **`<FilterControl />`** | Controls for filter mode and cutoff frequency. |
+| **`<SubControl />`** | Controls for the sub-oscillator. |
+| **` <NoiseControl />`** | Controls for the noise generator. |
+| **`<LFOControl />`** | Controls for LFO rate, depth, and routing. |
+| **`<EnvelopeControl />`** | Controls for the master ADSR envelope. |
+| **`<FXControl />`** | Controls for distortion, reverb, and delay. |
+
+---
+
+## 🚀 Headless Hooks (Advanced)
 Build your own UI logic from scratch using the `useAudioEngine` hook.
 
 ```jsx
