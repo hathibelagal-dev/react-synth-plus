@@ -11,6 +11,7 @@
   <script src="https://unpkg.com/tone@14"></script>
   
   <!-- Local Build (Run 'npm run build:lib' first) -->
+  <!-- Note: This file must be served via a static server, not 'npm run dev' -->
   <script src="../dist/react-synth-plus.umd.js"></script>
 
   <style>
@@ -25,10 +26,20 @@
       margin: 0;
     }
     h1 { margin-bottom: 0.2em; color: #00d2ff; letter-spacing: -0.02em; font-weight: 800; }
+    .error-msg {
+      background: #450a0a;
+      color: #fca5a5;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #7f1d1d;
+      margin: 20px;
+      max-width: 500px;
+      text-align: center;
+    }
     .instructions {
       max-width: 500px;
       text-align: center;
-      margin: 0.5em 0 2em;
+      margin: 0.5em 0 3em;
       color: #71717a;
       font-size: 0.9rem;
       line-height: 1.5;
@@ -135,9 +146,19 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script type="text/babel">
-    const { useAudioEngine, useKeyboard } = window.ReactSynthPlus;
+    function App() {
+      // Robust check for the library
+      if (!window.ReactSynthPlus) {
+        return (
+          <div className="error-msg">
+            <strong>Library not found!</strong><br/>
+            Make sure you ran <code>npm run build:lib</code> and are serving this file via a static server (e.g., <code>npx serve</code>).<br/>
+            Vite's <code>npm run dev</code> does not serve the <code>dist</code> folder.
+          </div>
+        );
+      }
 
-    function SynthApp() {
+      const { useAudioEngine, useKeyboard } = window.ReactSynthPlus;
       const { isStarted, init, setParam } = useAudioEngine();
       const { pressedNotes, playNote, stopNote, keys } = useKeyboard();
       
@@ -200,7 +221,7 @@
     }
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<SynthApp />);
+    root.render(<App />);
   </script>
 
 </body>
