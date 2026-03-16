@@ -32,7 +32,11 @@ The fastest way to get started. Import the components and the bundled CSS for a 
 ```jsx
 import { useState } from 'react';
 import { Keyboard, FilterControl, useAudioEngine } from 'react-synth-plus';
-import 'react-synth-plus/style.css'; // Don't forget the styles!
+
+// Import the bundled styles (choose ONE of the following):
+import 'react-synth-plus/dist/style.css'; 
+// or if your bundler supports aliases:
+// import 'react-synth-plus/style.css';
 
 const MySynth = () => {
   const { isStarted, init, setParam } = useAudioEngine();

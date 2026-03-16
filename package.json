@@ -17,6 +17,7 @@
       "import": "./dist/react-synth-plus.es.js",
       "require": "./dist/react-synth-plus.umd.js"
     },
+    "./css": "./dist/style.css",
     "./style.css": "./dist/style.css"
   },
   "scripts": {
