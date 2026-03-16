@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { wavetables } from './audio/Engine';
 import { useAudioEngine } from './hooks/useAudioEngine';
 import Visualizer from './components/Visualizer';
 import Keyboard from './components/Keyboard';
-import Module from './components/Module';
+import OscillatorControl from './components/OscillatorControl';
+import SubControl from './components/SubControl';
+import NoiseControl from './components/NoiseControl';
+import FilterControl from './components/FilterControl';
+import LFOControl from './components/LFOControl';
+import EnvelopeControl from './components/EnvelopeControl';
+import FXControl from './components/FXControl';
 
 const App = () => {
     const { isStarted, init, setParam, engine } = useAudioEngine();
@@ -72,88 +77,13 @@ const App = () => {
                     {isStarted ? 'AUDIO ENGINE RUNNING' : 'INITIALIZE AUDIO ENGINE'}
                 </button>
 
-                <Module title="Oscillator 1">
-                    <label className="synth-label">Wavetable
-                        <select className="synth-select" value={osc1.wavetable} onChange={(e) => updateParam('osc1', 'wavetable', e.target.value)}>
-                            {Object.keys(wavetables).map(wt => <option key={wt} value={wt}>{wt}</option>)}
-                        </select>
-                    </label>
-                    <label className="synth-label">WT POS <input className="synth-range" type="range" min="0" max="1" step="0.01" value={osc1.wtPos} onChange={(e) => updateParam('osc1', 'wtPos', parseFloat(e.target.value))} /></label>
-                </Module>
-
-                <Module title="Sub Oscillator">
-                    <label className="synth-label">Waveform
-                        <select className="synth-select" value={sub.type} onChange={(e) => updateParam('sub', 'type', e.target.value)}>
-                            <option value="sine">Sine</option>
-                            <option value="square">Square</option>
-                            <option value="sawtooth">Sawtooth</option>
-                            <option value="triangle">Triangle</option>
-                        </select>
-                    </label>
-                    <label className="synth-label">Volume <input className="synth-range" type="range" min="0" max="1" step="0.01" value={sub.volume} onChange={(e) => updateParam('sub', 'volume', parseFloat(e.target.value))} /></label>
-                    <label className="synth-label">Octave
-                        <select className="synth-select" value={sub.octave} onChange={(e) => updateParam('sub', 'octave', parseInt(e.target.value))}>
-                            <option value={-1}>-1 Oct</option>
-                            <option value={-2}>-2 Oct</option>
-                        </select>
-                    </label>
-                </Module>
-
-                <Module title="Noise Gen">
-                    <label className="synth-label">Type
-                        <select className="synth-select" value={noise.type} onChange={(e) => updateParam('noise', 'type', e.target.value)}>
-                            <option value="white">White</option>
-                            <option value="pink">Pink</option>
-                            <option value="brown">Brown</option>
-                        </select>
-                    </label>
-                    <label className="synth-label">Volume <input className="synth-range" type="range" min="0" max="1" step="0.01" value={noise.volume} onChange={(e) => updateParam('noise', 'volume', parseFloat(e.target.value))} /></label>
-                </Module>
-
-                <Module title="Filter">
-                    <label className="synth-label">Mode
-                        <select className="synth-select" value={filter.type} onChange={(e) => updateParam('filter', 'type', e.target.value)}>
-                            <option value="lowpass">Lowpass</option>
-                            <option value="highpass">Highpass</option>
-                            <option value="bandpass">Bandpass</option>
-                        </select>
-                    </label>
-                    <label className="synth-label">Cutoff <input className="synth-range" type="range" min="20" max="10000" value={filter.cutoff} onChange={(e) => updateParam('filter', 'cutoff', parseFloat(e.target.value))} /></label>
-                </Module>
-
-                <Module title="LFO 1">
-                    <label className="synth-label">Shape
-                        <select className="synth-select" value={lfo.type} onChange={(e) => updateParam('lfo', 'type', e.target.value)}>
-                            <option value="sine">Sine</option>
-                            <option value="square">Square</option>
-                            <option value="sawtooth">Sawtooth</option>
-                            <option value="triangle">Triangle</option>
-                        </select>
-                    </label>
-                    <label className="synth-label">Rate (Hz) <input className="synth-range" type="range" min="0.1" max="20" step="0.1" value={lfo.rate} onChange={(e) => updateParam('lfo', 'rate', parseFloat(e.target.value))} /></label>
-                    <label className="synth-label">Depth <input className="synth-range" type="range" min="0" max="1200" step="1" value={lfo.depth} onChange={(e) => updateParam('lfo', 'depth', parseFloat(e.target.value))} /></label>
-                    <label className="synth-label">Target
-                        <select className="synth-select" value={lfo.target} onChange={(e) => updateParam('lfo', 'target', e.target.value)}>
-                            <option value="none">None</option>
-                            <option value="cutoff">Filter Cutoff</option>
-                            <option value="pitch">Pitch</option>
-                        </select>
-                    </label>
-                </Module>
-
-                <Module title="Master Envelope">
-                    <label className="synth-label">Attack <input className="synth-range" type="range" min="0" max="2" step="0.01" value={env.attack} onChange={(e) => updateParam('env', 'attack', parseFloat(e.target.value))} /></label>
-                    <label className="synth-label">Release <input className="synth-range" type="range" min="0" max="5" step="0.01" value={env.release} onChange={(e) => updateParam('env', 'release', parseFloat(e.target.value))} /></label>
-                </Module>
-
-                <Module title="FX Rack">
-                    <label className="synth-label">Distortion <input className="synth-range" type="range" min="0" max="1" step="0.01" value={fx.dist} onChange={(e) => updateParam('fx', 'dist', parseFloat(e.target.value))} /></label>
-                    <label className="synth-label">Reverb Mix <input className="synth-range" type="range" min="0" max="1" step="0.01" value={fx.reverbMix} onChange={(e) => updateParam('fx', 'reverbMix', parseFloat(e.target.value))} /></label>
-                    <div className="h-[1px] bg-zinc-700 my-1"></div>
-                    <label className="synth-label">Delay Mix <input className="synth-range" type="range" min="0" max="1" step="0.01" value={fx.delayMix} onChange={(e) => updateParam('fx', 'delayMix', parseFloat(e.target.value))} /></label>
-                    <label className="synth-label">Delay Time <input className="synth-range" type="range" min="0" max="1" step="0.01" value={fx.delayTime} onChange={(e) => updateParam('fx', 'delayTime', parseFloat(e.target.value))} /></label>
-                    <label className="synth-label">Delay FB <input className="synth-range" type="range" min="0" max="1" step="0.01" value={fx.delayFeedback} onChange={(e) => updateParam('fx', 'delayFeedback', parseFloat(e.target.value))} /></label>
-                </Module>
+                <OscillatorControl value={osc1} onChange={updateParam} />
+                <SubControl value={sub} onChange={updateParam} />
+                <NoiseControl value={noise} onChange={updateParam} />
+                <FilterControl value={filter} onChange={updateParam} />
+                <LFOControl value={lfo} onChange={updateParam} />
+                <EnvelopeControl value={env} onChange={updateParam} />
+                <FXControl value={fx} onChange={updateParam} />
             </section>
 
             <Keyboard subOctave={sub.octave} />
