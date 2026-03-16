@@ -1,6 +1,6 @@
 {
   "name": "react-synth-plus",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A high-performance, headless wavetable synthesizer for React built on Tone.js",
   "author": "Ashraff Hathibelagal",
   "license": "GPL-3.0-only",
@@ -38,7 +38,7 @@
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
-    "@vitejs/plugin-react": "^4.0.3",
+    "@vitejs/plugin-react-swc": "^4.3.0",
     "autoprefixer": "^10.4.27",
     "jsdom": "^22.1.0",
     "postcss": "^8.5.8",
@@ -49,23 +49,23 @@
     "vite": "^4.4.5",
     "vitest": "^0.34.2"
   },
-	"keywords": [
-		"Web Audio",
-		"Web Audio API",
-		"Synthesis",
-		"Playback",
-		"Effect",
-		"Instrument",
-		"DSP",
-		"Signal Processing",
-		"Interactive Music"
-	],
+  "keywords": [
+    "Web Audio",
+    "Web Audio API",
+    "Synthesis",
+    "Playback",
+    "Effect",
+    "Instrument",
+    "DSP",
+    "Signal Processing",
+    "Interactive Music"
+  ],
   "bugs": {
-		"url": "https://github.com/hathibelagal-dev/react-synth-plus/issues"
-	},
-	"homepage": "https://github.com/hathibelagal-dev/react-synth-plus#readme",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/hathibelagal-dev/react-synth-plus.git"
-	}
+    "url": "https://github.com/hathibelagal-dev/react-synth-plus/issues"
+  },
+  "homepage": "https://github.com/hathibelagal-dev/react-synth-plus#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hathibelagal-dev/react-synth-plus.git"
+  }
 }

@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 
 export default defineConfig(({ mode }) => {
@@ -17,17 +17,17 @@ export default defineConfig(({ mode }) => {
         fileName: (format) => `react-synth-plus.${format}.js`,
       },
       rollupOptions: {
-        external: ['react', 'react-dom', 'tone'],
+        external: ['react', 'react-dom', 'tone', 'react/jsx-runtime'],
         output: {
           globals: {
             react: 'React',
             'react-dom': 'ReactDOM',
             tone: 'Tone',
+            'react/jsx-runtime': 'jsxRuntime',
           },
         },
       },
     } : {
-      // Default app build (for showcase/app)
       outDir: 'dist-app',
     },
     test: {
