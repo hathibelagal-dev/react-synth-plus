@@ -20,6 +20,24 @@ The goal is to create a fully functional, polyphonic wavetable synthesizer that 
 - [x] **Noise Generator**: White/Pink/Brownian noise with filtering (v0.10)
 - [x] **Polyphonic Management**: PolySynth implementation with keyboard UI (v0.2)
 - [x] **React Refactor**: Migrated from Vanilla JS to React (v0.7)
+- [x] **Hybrid Architecture**: Support for both Headless Hooks and Styled Components (v1.0)
+- [x] **NPM Ready**: Optimized build with externalized React and peerDependencies (v1.0)
+
+## 4. Completed Features
+- [x] Dual Wavetable Oscillators
+- [x] Sub-Oscillator & Noise Generator
+- [x] Multi-mode Filters
+- [x] Modulation (LFO & Envelopes)
+- [x] FX Rack (Distortion, Reverb, Delay)
+- [x] Headless Hooks (`useAudioEngine`, `useKeyboard`)
+- [x] Modular UI Component Library
+- [x] Comprehensive Test Suite (11 tests passing)
+- [x] Standardized Documentation (README, Examples, standalone)
+
+## 5. Build & Release
+- `npm run build:lib`: Generates ESM/UMD bundles and compiled CSS.
+- `npm run dev:showcase`: Launches the full project dashboard.
+- `npm test`: Runs the Vitest suite.
 
 ### Phase 2: Wavetable Engine
 - [x] **Wavetable Morphing**: Interpolation between partial sets via WT POS slider (v0.4)
