@@ -10,10 +10,10 @@
 ## ✨ Key Features
 
 - 🚀 **Headless Architecture**: Complete separation of audio logic and UI. Build your own synth interface using our custom React hooks.
+- 🎨 **Pre-built UI Components**: Optional, modular components (Keyboard, Filters, FX) for instant dashboard creation.
 - 🌊 **Wavetable Engine**: Smooth morphing between complex wavetable partials.
 - 🎸 **Built-in FX Rack**: Professional distortion, reverb, and feedback delay out of the box.
 - 🎹 **Intelligent Keyboard Hook**: Effortless QWERTY-to-MIDI mapping and polyphonic note management.
-- 🎨 **Tailwind CSS Ready**: Designed to work seamlessly with utility-first styling.
 - 🧪 **Rock Solid**: Fully tested with Vitest and React Testing Library.
 
 ---
@@ -30,8 +30,36 @@ npm install react-synth-plus
 
 ## 🚀 Quick Start
 
-### 1. Basic Note Triggering
-Use the `useAudioEngine` hook to control the synth's lifecycle and parameters.
+### 1. Using Pre-built UI Components
+The fastest way to get started. Import the components and the bundled CSS for a professional look.
+
+```jsx
+import { Keyboard, FilterControl, useAudioEngine } from 'react-synth-plus';
+import 'react-synth-plus/style.css'; // Don't forget the styles!
+
+const MySynth = () => {
+  const { isStarted, init, setParam } = useAudioEngine();
+  
+  // You would manage this state in your app
+  const [filterState, setFilterState] = useState({ type: 'lowpass', cutoff: 2000 });
+
+  return (
+    <div className="synth-dark-theme">
+      {!isStarted ? (
+        <button onClick={init}>Start Engine</button>
+      ) : (
+        <>
+          <FilterControl value={filterState} onChange={setParam} />
+          <Keyboard />
+        </>
+      )}
+    </div>
+  );
+};
+```
+
+### 2. Basic Note Triggering (Headless)
+Build your own UI logic from scratch using the `useAudioEngine` hook.
 
 ```jsx
 import { useAudioEngine } from 'react-synth-plus';

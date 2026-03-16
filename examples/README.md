@@ -41,6 +41,15 @@ Demonstrates how to use the library via a UMD bundle in a plain HTML file (no bu
 ---
 
 ## 💡 Key Concepts
-All React examples leverage the **Headless Hook** pattern:
-- `useAudioEngine`: Manages the lifecycle and core parameters of the synth via `setParam(module, param, value)`.
-- `useKeyboard`: Manages polyphonic note triggering and QWERTY mapping.
+This project offers a **Hybrid Architecture**, as demonstrated in these examples:
+
+### 1. Headless Hooks (Total UI Freedom)
+As seen in `BasicTrigger.jsx` and `DroneMachine.jsx`, you can use `useAudioEngine` and `useKeyboard` to build completely custom interfaces with your own styles.
+
+### 2. Pre-built UI Components (Batteries Included)
+As seen in `Showcase.jsx` and `App.jsx`, you can import ready-made components like `<Keyboard />`, `<FilterControl />`, and `<Visualizer />`. 
+
+To use these, import the bundled CSS:
+```javascript
+import 'react-synth-plus/style.css';
+```
