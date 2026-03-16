@@ -1,4 +1,5 @@
 // Library entry point
+import './index.css';
 
 // Core Audio
 export { engine as AudioEngine, wavetables } from './audio/Engine';
