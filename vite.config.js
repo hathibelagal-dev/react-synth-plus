@@ -7,6 +7,9 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
+    define: {
+      'process.env.NODE_ENV': JSON.stringify(mode === 'library' ? 'production' : 'development'),
+    },
     build: isLibrary ? {
       lib: {
         entry: path.resolve(__dirname, 'src/index.js'),

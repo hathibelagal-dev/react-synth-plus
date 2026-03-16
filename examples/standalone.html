@@ -10,6 +10,9 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/tone@14"></script>
   
+  <!-- Fix for 'process is not defined' error in browser -->
+  <script>window.process = { env: { NODE_ENV: 'production' } };</script>
+  
   <!-- Local Build (Run 'npm run build:lib' first) -->
   <!-- Note: This file must be served via a static server, not 'npm run dev' -->
   <script src="../dist/react-synth-plus.umd.js"></script>
