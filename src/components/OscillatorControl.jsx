@@ -1,4 +1,3 @@
-import React from 'react';
 import { wavetables } from '../audio/Engine';
 import Module from './Module';
 

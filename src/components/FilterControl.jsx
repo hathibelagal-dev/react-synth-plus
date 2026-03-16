@@ -1,4 +1,3 @@
-import React from 'react';
 import Module from './Module';
 
 const FilterControl = ({ value, onChange }) => (

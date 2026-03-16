@@ -1,4 +1,3 @@
-import React from 'react';
 
 /**
  * Generic module container with Tailwind styling.
