@@ -32,6 +32,16 @@ class AudioEngine {
         this.activeNotes = new Set();
         this.currentWT = 'basic';
         this.currentWTPos = 0;
+        this.listeners = new Set();
+    }
+
+    subscribe(callback) {
+        this.listeners.add(callback);
+        return () => this.listeners.delete(callback);
+    }
+
+    notify() {
+        this.listeners.forEach(cb => cb());
     }
 
     async init() {
@@ -87,6 +97,7 @@ class AudioEngine {
 
         this.isStarted = true;
         this.updateWavetable();
+        this.notify();
     }
 
     interpolatePartials(pos, table) {
@@ -123,6 +134,7 @@ class AudioEngine {
         const subNote = Tone.Frequency(note).transpose(subOctave * 12).toNote();
         this.subSynth.triggerAttack(subNote);
         if (this.activeNotes.size === 1) this.noiseEnv.triggerAttack();
+        this.notify();
     }
 
     stopNote(note, subOctave = -2) {
@@ -132,6 +144,7 @@ class AudioEngine {
         const subNote = Tone.Frequency(note).transpose(subOctave * 12).toNote();
         this.subSynth.triggerRelease(subNote);
         if (this.activeNotes.size === 0) this.noiseEnv.triggerRelease();
+        this.notify();
     }
 
     setParam(module, param, value) {
@@ -186,6 +199,7 @@ class AudioEngine {
                 if (param === 'delayFeedback') this.delay.feedback.value = value;
                 break;
         }
+        this.notify();
     }
 }
 

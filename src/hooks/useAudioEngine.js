@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { engine } from '../audio/Engine';
 
 /**
@@ -6,10 +6,18 @@ import { engine } from '../audio/Engine';
  */
 export const useAudioEngine = () => {
     const [isStarted, setIsStarted] = useState(engine.isStarted);
+    const [activeNotesCount, setActiveNotesCount] = useState(engine.activeNotes?.size || 0);
+
+    useEffect(() => {
+        const unsubscribe = engine.subscribe(() => {
+            setIsStarted(engine.isStarted);
+            setActiveNotesCount(engine.activeNotes.size);
+        });
+        return unsubscribe;
+    }, []);
 
     const init = useCallback(async () => {
         await engine.init();
-        setIsStarted(true);
     }, []);
 
     const setParam = useCallback((module, param, value) => {
@@ -20,7 +28,7 @@ export const useAudioEngine = () => {
         isStarted,
         init,
         setParam,
-        activeNotesCount: engine.activeNotes?.size || 0,
+        activeNotesCount,
         engine // Direct access to the singleton if needed
     };
 };
